@@ -50,3 +50,32 @@ class Contact {
         return `${this.firstName} ${this.lastName}, ${this.address}, ${this.city}, ${this.state}, ${this.zip}, Phone: ${this.phone}, Email: ${this.email}`;
     }
 }
+
+
+class AddressBook {
+    constructor() {
+        this.contacts = [];
+    }
+
+    addContact(firstName, lastName, address, city, state, zip, phone, email) {
+        try {
+            const contact = new Contact(firstName, lastName, address, city, state, zip, phone, email);
+            this.contacts.push(contact);
+            console.log('Contact added successfully:', contact);
+        } catch (error) {
+            console.error('Error adding contact:', error.message);
+        }
+    }
+
+    displayContacts() {
+        return this.contacts.map(contact => contact.displayContact());
+    }
+}
+
+const addressBook = new AddressBook();
+
+console.log(JSON.stringify(addressBook.contacts));
+addressBook.addContact("Parth", "Goyal", "Mathura", "CityName", "UttarPradesh", "281001", "1234567890", "parth@gmail.com");
+addressBook.addContact("Shanya", "Sharma", "Mathura", "CityName", "UttarPradesh", "281001", "1234567890", "shanya@gmail.com");
+console.log(JSON.stringify(addressBook.contacts));
+console.log();
