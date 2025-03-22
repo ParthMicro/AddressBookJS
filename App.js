@@ -58,6 +58,10 @@ class AddressBook {
     }
 
     addContact(firstName, lastName, address, city, state, zip, phone, email) {
+        if (this.contacts.some(c => c.firstName === firstName && c.lastName === lastName)) {
+            console.error('Duplicate contact entry detected. Contact not added.');
+            return;
+        }
         try {
             const contact = new Contact(firstName, lastName, address, city, state, zip, phone, email);
             this.contacts.push(contact);
@@ -114,3 +118,4 @@ console.log(JSON.stringify(addressBook.contacts,null,2));
 
 // Display contact count
 console.log("Number of contacts in address book:", addressBook.getContactCount());
+addressBook.addContact("Parth", "Goyal", "Mathura", "CityName", "UttarPradesh", "281001", "9752008224", "parth@gmail.com");
