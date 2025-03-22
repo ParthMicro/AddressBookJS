@@ -105,12 +105,31 @@ class AddressBook {
     searchByCityOrState(location) {
         return this.contacts.filter(contact => contact.city === location || contact.state === location);
     }
+
+    //search persons using city or state name
+    viewPersonsByCityOrState() {
+        const groupedByCity = this.contacts.reduce((acc, contact) => {
+            acc[contact.city] = acc[contact.city] || [];
+            acc[contact.city].push(contact.displayContact());
+            return acc;
+        }, {});
+
+        const groupedByState = this.contacts.reduce((acc, contact) => {
+            acc[contact.state] = acc[contact.state] || [];
+            acc[contact.state].push(contact.displayContact());
+            return acc;
+        }, {});
+
+        return { groupedByCity, groupedByState };
+    }
 }
 
 const addressBook = new AddressBook();
 
 console.log(JSON.stringify(addressBook.contacts));
-addressBook.addContact("Parth", "Goyal", "Mathura", "CityName", "UttarPradesh", "281001", "1234567890", "parth@gmail.com");
+addressBook.addContact("Parth", "Goyal", "Mathura", "CityName", "MadhyaPradesh", "281001", "1234567890", "parth@gmail.com");
+addressBook.addContact("Abhinav", "Gupta", "Jhansi", "CityName", "UttarPradesh", "281001", "1234567899", "abhinav@gmail.com");
+addressBook.addContact("Kshiriz", "Katiyar", "Jhansi", "CityName", "UttarPradesh", "281001", "1234567899", "kshitiz@gmail.com");
 addressBook.addContact("Shanya", "Sharma", "Mathura", "CityName", "UttarPradesh", "281001", "1234567890", "shanya@gmail.com");
 console.log(JSON.stringify(addressBook.contacts));
 console.log();
@@ -124,8 +143,11 @@ console.log(JSON.stringify(addressBook.contacts,null,2));
 
 // Display contact count
 console.log("Number of contacts in address book:", addressBook.getContactCount());
-addressBook.addContact("Parth", "Goyal", "Mathura", "CityName", "UttarPradesh", "281001", "9752008224", "parth@gmail.com");
+addressBook.addContact("Parth", "Goyal", "Mathura", "CityName", "MadhyaPradesh", "281001", "9752008224", "parth@gmail.com");
 
 // searching contacts by city or state
 console.log("Contacts in CityName:", addressBook.searchByCityOrState("CityName"));
 console.log("Contacts in StateName:", addressBook.searchByCityOrState("UttarPradesh"));
+
+//viewing persons by city or state
+console.log("Persons grouped by city and state:", addressBook.viewPersonsByCityOrState());
